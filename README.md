@@ -7,7 +7,7 @@ Simple console
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'console', github: 'xjz19901211/console'
+gem 'console'
 ```
 
 And then execute:
@@ -27,6 +27,11 @@ class MyConsole
   define_cmd(:rand, "puts random number") do |max = 100|
     puts rand(max.to_i)
   end
+
+  define_cmd(:incr, "increment number") do |incrby = 1|
+    @number ||= 0
+    puts @number += incrby.to_i
+  end
 end
 
 MyConsole.new.start("my-console > ", "Use 'help' show all commands")
@@ -45,6 +50,12 @@ my-console > rand 10
 4
 my-console > rand 10100
 2492
+my-console > incr
+1
+my-console > incr 3
+4
+my-console > incr
+5
 my-console > exit
 $ 
 
