@@ -44,6 +44,7 @@ my-console > help
   help: show all commands
   exit: exit console
   rand: puts random number
+  incr: increment number
 my-console > rand
 23
 my-console > rand 10
