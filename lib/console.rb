@@ -15,15 +15,14 @@ module Console
   module ClassMethods
     def define_cmd(name, desc, &block)
       commands[name.to_s] = {desc: desc, block: block}
-
-      define_method(command_method_name(name), &block)
     end
 
     def run_cmd(instance, cmd_name, args = [])
       cmd_name = cmd_name.to_s
+      command = commands[cmd_name]
 
-      if commands[cmd_name]
-        instance.send(command_method_name(cmd_name), *args)
+      if command
+        instance.instance_exec(*args, &command[:block])
       else
         puts "Invalid command '#{cmd_name}'"
       end
@@ -34,14 +33,6 @@ module Console
     def commands
       @commands ||= {}
     end
-
-
-    private
-
-    def command_method_name(cmd_name)
-      "_cmd_#{cmd_name}"
-    end
-
   end
 
 

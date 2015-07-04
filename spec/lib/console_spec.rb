@@ -48,10 +48,10 @@ RSpec.describe Console do
 
 
   describe '.define_cmd' do
-    it 'should create instance method' do
+    it 'should save block' do
       expect {
         cls.define_cmd(:add, "desc") { |a, b| puts a + b }
-      }.to change { cls.instance_methods.include?(:_cmd_add) }.to(true)
+      }.to change { cls.commands.length }.by(1)
     end
   end
 
